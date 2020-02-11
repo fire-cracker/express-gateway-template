@@ -1,0 +1,63 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  api:
+    host: localhost
+    paths: '/ip'
+  user:
+    host: localhost
+    paths: ['/users','/users/*']
+  music:
+    host: localhost
+    paths: ['/musics','/musics/*']
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+  userService:
+    url: 'http://localhost:3000'
+  musicService:
+    url: 'http://localhost:8000'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin
+              changeOrigin: true
+  userPipeline:
+    apiEndpoints:
+      - user
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: userService
+              changeOrigin: true
+  musicPipeline:
+    apiEndpoints:
+      - music
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: musicService
+              changeOrigin: true
+
