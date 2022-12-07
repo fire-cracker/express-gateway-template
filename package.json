@@ -9,7 +9,7 @@
     "start": "nodemon --exec babel-node server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-gateway": "^1.16.10"
   },
   "devDependencies": {
